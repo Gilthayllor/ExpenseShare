@@ -1,4 +1,5 @@
 ﻿using ExpenseShare.Domain.Abstractions;
+using ExpenseShare.Domain.Rooms;
 using ExpenseShare.Domain.Users.Events;
 
 namespace ExpenseShare.Domain.Users
@@ -10,6 +11,8 @@ namespace ExpenseShare.Domain.Users
         public Email Email { get; private set; }
 
         public Guid RoomId { get; private set; }
+        
+        public Room Room { get; private set; }
 
         private User(Guid id, Name name, Email email) :base(id)
         {
