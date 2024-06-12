@@ -1,4 +1,5 @@
 ﻿using ExpenseShare.Domain.Abstractions;
+using ExpenseShare.Domain.Expenses;
 using ExpenseShare.Domain.Rooms.Events;
 using ExpenseShare.Domain.Users;
 
@@ -12,6 +13,9 @@ namespace ExpenseShare.Domain.Rooms
 
         private readonly List<User> _users = [];
         public IReadOnlyCollection<User> Users => _users;
+
+        private readonly List<Expense> _expenses = [];
+        public IReadOnlyCollection<Expense> Expenses => _expenses;
 
         private Room(Guid id, Name name, Code code): base(id)
         {

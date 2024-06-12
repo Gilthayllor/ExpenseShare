@@ -9,6 +9,11 @@
             Value = value;
         }
 
+        public static Code FromValue(string value)
+        {
+            return new Code(value);
+        }
+
         public static Code NewCode()
         {
             const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";

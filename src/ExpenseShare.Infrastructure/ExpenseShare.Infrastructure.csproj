@@ -18,8 +18,4 @@
     <ProjectReference Include="..\ExpenseShare.Application\ExpenseShare.Application.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Configurations\" />
-  </ItemGroup>
-
 </Project>

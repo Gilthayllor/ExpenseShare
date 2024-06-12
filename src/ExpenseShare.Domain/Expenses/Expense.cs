@@ -7,11 +7,10 @@ namespace ExpenseShare.Domain.Expenses
     public sealed class Expense : Entity
     {
         public Name Name { get; private set; }
-
+        public Description Description { get; private set; }
         public Money ExpenseValue { get; private set; }
-
         public Guid RoomId { get; private set; }
-        public Room Room { get; init; }
+        public Room Room { get; private set; }
 
         private readonly List<ExpenseParticipant> _expenseParticipants = [];
         public IReadOnlyCollection<ExpenseParticipant> ExpenseParticipants => _expenseParticipants;
