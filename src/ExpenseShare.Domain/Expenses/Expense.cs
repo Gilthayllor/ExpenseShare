@@ -1,4 +1,5 @@
 ﻿using ExpenseShare.Domain.Abstractions;
+using ExpenseShare.Domain.Expenses.Events;
 using ExpenseShare.Domain.Rooms;
 
 namespace ExpenseShare.Domain.Expenses
@@ -15,7 +16,7 @@ namespace ExpenseShare.Domain.Expenses
         private readonly List<ExpenseParticipant> _expenseParticipants = [];
         public IReadOnlyCollection<ExpenseParticipant> ExpenseParticipants => _expenseParticipants;
 
-        public Expense(Name name, Money expenseValue, Guid roomId)
+        private Expense(Name name, Money expenseValue, Guid roomId)
         {
             Name = name;
             ExpenseValue = expenseValue;
@@ -24,7 +25,25 @@ namespace ExpenseShare.Domain.Expenses
 
         private static Expense Create(Name name, Money expenseValue, Guid roomId)
         {
-            
+            var expense = new Expense(name, expenseValue, roomId);
+
+            expense.RaiseDomainEvent(new ExpenseCreatedDomainEvent(expense.Id));
+
+            return expense;
+        }
+
+        public void AddExpenseParticipant(ExpenseParticipant expenseParticipant)
+        {
+            _expenseParticipants.Add(expenseParticipant);
+
+            RaiseDomainEvent(new ExpenseParticipantAddedDomainEvent(expenseParticipant.UserId, Id));
+        }
+
+        public void RemoveExpenseParticipant(ExpenseParticipant expenseParticipant)
+        {
+            _expenseParticipants.Remove(expenseParticipant);
+
+            RaiseDomainEvent(new ExpensePartipantRemovedDomainEvent(expenseParticipant.UserId, Id));
         }
     }
 }

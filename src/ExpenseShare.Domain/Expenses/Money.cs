@@ -21,5 +21,13 @@
 
             return new Money(a.Amount + b.Amount, a.Currency);
         }
+
+        public static Money operator -(Money a, Money b)
+        {
+            if (a.Currency != b.Currency)
+                throw new InvalidOperationException("Currencies have to be equal");
+
+            return new Money(a.Amount + b.Amount, a.Currency);
+        }
     }
 }
