@@ -10,9 +10,9 @@ namespace ExpenseShare.Domain.Users
 
         public Email Email { get; private set; }
 
-        public Guid RoomId { get; private set; }
+        public Guid? RoomId { get; private set; }
         
-        public Room Room { get; private set; }
+        public Room? Room { get; private set; }
 
         private User(Guid id, Name name, Email email) :base(id)
         {
@@ -25,6 +25,15 @@ namespace ExpenseShare.Domain.Users
         public static User Create(Name name, Email email)
         {
             var user = new User(Guid.NewGuid(), name, email);
+
+            user.RaiseDomainEvent(new UserCreatedDomainEvent(user.Id));
+
+            return user;
+        }
+        
+        public static User Create(Guid id, Name name, Email email)
+        {
+            var user = new User(id, name, email);
 
             user.RaiseDomainEvent(new UserCreatedDomainEvent(user.Id));
 

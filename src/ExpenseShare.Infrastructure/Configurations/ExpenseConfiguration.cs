@@ -21,9 +21,15 @@ namespace ExpenseShare.Infrastructure.Configurations
             builder.OwnsOne(x => x.ExpenseValue, builder =>
             {
                 builder.Property(money => money.Currency)
-                    .HasConversion(currency => currency.Code, code => Currency.FromCode(code));
+                    .HasConversion(currency => currency.Code, code => Currency.FromCode(code))
+                    .HasColumnName("ExpenseCurrency");
+                builder.Property(money => money.Amount)
+                    .HasPrecision(18,2)
+                    .HasColumnName("ExpenseAmount");
             });
 
+            var participantsNavigation = builder.Metadata.FindNavigation(nameof(Expense.ExpenseParticipants));
+            participantsNavigation?.SetPropertyAccessMode(PropertyAccessMode.Field);
         }
     }
 }

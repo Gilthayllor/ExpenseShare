@@ -8,11 +8,19 @@
         public Money AmountPaid { get; private set; } = Money.Zero();
         public Money RemainingAmount => AmountOwed - AmountPaid;
 
-        public ExpenseParticipant(Guid userId, Guid expenseId, Money amountOwed)
+        private ExpenseParticipant(Guid userId, Guid expenseId, Money amountOwed)
         {
             UserId = userId;
             ExpenseId = expenseId;
             AmountOwed = amountOwed;
+            AmountPaid = Money.Zero(amountOwed.Currency);
+        }
+
+        private ExpenseParticipant() { }
+
+        public static ExpenseParticipant NewParticipant(Guid userId, Guid expenseId, Money amountOwed)
+        {
+            return new ExpenseParticipant(userId, expenseId, amountOwed);
         }
 
         public void Pay(Money money)

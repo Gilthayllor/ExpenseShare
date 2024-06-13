@@ -2,7 +2,7 @@
 {
     public interface IUserRepository
     {
-        User GetById(Guid id);
+        Task<User?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
         void Add(User user);
     }
 }

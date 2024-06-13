@@ -1,0 +1,32 @@
+version: '3.4'
+
+services:
+  expenseshare.api:
+    image: ${DOCKER_REGISTRY-}expenseshareapi
+    build:
+      context: .
+      dockerfile: src/ExpenseShare.Api/Dockerfile
+    environment:
+      - ASPNETCORE_HTTP_PORTS=80
+      - ASPNETCORE_HTTPS_PORTS=443
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "5005:80"
+      - "5006:443"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+    depends_on:
+      - expenseshare.db
+
+  expenseshare.db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: expenseshare.db
+    environment:
+      - MSSQL_SA_PASSWORD=sqlserver@24
+      - ACCEPT_EULA=Y
+    ports:
+      - "1433:1433"
+    volumes:
+      - ./.containers/database:/var/opt/mssql/data
+  

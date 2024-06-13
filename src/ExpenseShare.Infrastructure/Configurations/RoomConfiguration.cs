@@ -29,7 +29,8 @@ namespace ExpenseShare.Infrastructure.Configurations
 
             builder.HasMany(x => x.Users)
                 .WithOne(x => x.Room)
-                .HasForeignKey(x => x.RoomId);
+                .HasForeignKey(x => x.RoomId)
+                .OnDelete(DeleteBehavior.SetNull);
 
             var expensesNavigation =
               builder.Metadata.FindNavigation(nameof(Room.Expenses));
